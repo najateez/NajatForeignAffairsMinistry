@@ -64,6 +64,19 @@
 			<version>5.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- for setters and getters-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- for report jaspersoft -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.20.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
