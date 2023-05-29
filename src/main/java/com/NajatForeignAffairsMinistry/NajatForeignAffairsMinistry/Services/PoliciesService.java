@@ -46,4 +46,11 @@ public class PoliciesService {
         Policies policiesRegion = policiesRepository.getPoliciesByRegion(region);
         return policiesRegion;
     }
+
+    //--------------------------------------
+    // for cron controller:-
+    public Policies savePolicies(Policies policies) {
+
+        return policies;
+    }
 }

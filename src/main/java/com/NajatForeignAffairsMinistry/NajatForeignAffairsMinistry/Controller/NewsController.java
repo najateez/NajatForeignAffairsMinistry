@@ -3,13 +3,11 @@ package com.NajatForeignAffairsMinistry.NajatForeignAffairsMinistry.Controller;
 import com.NajatForeignAffairsMinistry.NajatForeignAffairsMinistry.Models.News;
 import com.NajatForeignAffairsMinistry.NajatForeignAffairsMinistry.Services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Component
 @RestController
@@ -69,5 +67,21 @@ public class NewsController {
     public ResponseEntity<News> getNewsByRegion(@RequestParam String region) {
         News newsRegion = newsService.getNewsByRegion(region);
         return ResponseEntity.ok(newsRegion);
+    }
+
+//-----------------------------------------------------
+
+    //for cron:-
+    //POST + Response entity 200 OK
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("api/cron/updateNews")
+    public ResponseEntity<News> cronForNews(@RequestBody News news) {
+        // Validate required fields
+        if (news.getCountry() == null || news.getTitle().isEmpty() || news.getRegion() == null || news.getDetails().isEmpty() ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return a 400 Bad Request response
+        }
+        // Save the News to the database
+        News savedNews = newsService.saveNews(news);
+        return ResponseEntity.status(HttpStatus.OK).body(savedNews);
     }
 }

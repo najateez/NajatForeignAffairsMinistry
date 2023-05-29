@@ -47,4 +47,11 @@ public class NewsService {
         News newsRegion = newsRepository.getNewsByRegion(region);
         return newsRegion;
     }
+
+    //--------------------------------------
+    // for cron controller:-
+    public News saveNews(News news) {
+
+        return news;
+    }
 }

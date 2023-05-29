@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Component
 @RestController
@@ -69,4 +66,20 @@ public class PoliciesController {
         Policies policiesRegion = policiesService.getPoliciesByRegion(region);
         return ResponseEntity.ok(policiesRegion);
     }
+    //-----------------------------------------------------
+
+    //for cron:-
+    //POST + Response entity 200 OK
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("api/cron/updatePolicies")
+    public ResponseEntity<Policies> cronForPolicies(@RequestBody Policies policies) {
+        // Validate required fields
+        if (policies.getCountry() == null || policies.getTopic().isEmpty() || policies.getRegion() == null || policies.getDetails().isEmpty() ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return a 400 Bad Request response
+        }
+        // Save the policies to the database
+        Policies savedPolicies = policiesService.savePolicies(policies);
+        return ResponseEntity.status(HttpStatus.OK).body(savedPolicies);
+    }
+
 }
