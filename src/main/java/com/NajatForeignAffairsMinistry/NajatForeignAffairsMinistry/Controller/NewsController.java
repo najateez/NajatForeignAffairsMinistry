@@ -4,6 +4,7 @@ import com.NajatForeignAffairsMinistry.NajatForeignAffairsMinistry.Models.News;
 import com.NajatForeignAffairsMinistry.NajatForeignAffairsMinistry.Services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,7 @@ public class NewsController {
 
     //add
     //exp: localhost:8080/api/news/{newsId}?title=USA and Canada sign new trade agreement&country=Canada&region=North America&details=The USA and Canada have signed a new trade agreement, promoting greater economic cooperation.
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/news/{newsId}", method = RequestMethod.PUT)
     public ResponseEntity<String> addNewsManagement(@RequestParam String title, @RequestParam String country, @RequestParam String region, @RequestParam String details) {
 
@@ -30,9 +31,9 @@ public class NewsController {
         return ResponseEntity.ok("News management added successfully.");
     }
 
- //   @PreAuthorize("hasRole('USER')")
     //update
     //exp: localhost:8080/api/news/{newsId}/updateNewsManagementById?id=2&title=shambaqbaq
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/news/{newsId}/updateNewsManagementById", method = RequestMethod.PUT)
     public ResponseEntity<String> updateNewsManagementById(@RequestParam Integer id, @RequestParam String title) {
         newsService.updateNewsManagementById(id, title);
@@ -42,7 +43,7 @@ public class NewsController {
 
     //delete
     //exp: localhost:8080/api/news/{newsId}/deleteNewsManagementById?id=1
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/news/{newsId}/deleteNewsManagementById", method = RequestMethod.PUT)
     public ResponseEntity<String> deleteNewsManagementById(@RequestParam Integer id) {
         newsService.deleteNewsManagementById(id);
@@ -55,7 +56,7 @@ public class NewsController {
     //getByColumnName:-
     //ResponseEntity (http status code) -> 200 OK
     //exp:localhost:8080/api/news/getNewsByCountry?country=canada
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/news/getNewsByCountry", method = RequestMethod.GET)
     public ResponseEntity<News> getNewsByCountry(@RequestParam String country) {
         News news = newsService.getNewsByCountry(country);
@@ -63,7 +64,7 @@ public class NewsController {
     }
 
     //exp: localhost:8080/api/news?region=North America
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/news", method = RequestMethod.GET)
     public ResponseEntity<News> getNewsByRegion(@RequestParam String region) {
         News newsRegion = newsService.getNewsByRegion(region);

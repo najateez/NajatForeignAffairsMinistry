@@ -5,6 +5,7 @@ import com.NajatForeignAffairsMinistry.NajatForeignAffairsMinistry.Services.Poli
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,7 @@ public class PoliciesController {
     //ResponseEntity (http status code) -> 201
 
     //exp: localhost:8080/api/policies?country=USA&region=North America&topic=Trade&details=The USA is committed to free and fair trade with all nations.
- //   @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/policies", method = RequestMethod.POST)
     public ResponseEntity<String> addPolicyManagement(@RequestParam String country, @RequestParam String region, @RequestParam String topic, @RequestParam String details) {
 
@@ -32,7 +33,7 @@ public class PoliciesController {
     }
 
     //exp: localhost:8080/api/policies/updatePolicyManagementById?id=2&details=Najateez Alkhatri
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/policies/updatePolicyManagementById", method = RequestMethod.POST)
     public ResponseEntity<String> updatePolicyManagementById(@RequestParam Integer id,@RequestParam String details) {
         policiesService.updatePolicyManagementById(id,details);
@@ -41,7 +42,7 @@ public class PoliciesController {
     }
 
     //exp: localhost:8080/api/policies/deletePolicyManagementById?id=1
-//    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/policies/deletePolicyManagementById", method = RequestMethod.POST)
     public ResponseEntity<String> deletePolicyManagementById(@RequestParam Integer id) {
         policiesService.deletePolicyManagementById(id);
@@ -54,7 +55,7 @@ public class PoliciesController {
     //getByColumnName:-
     //ResponseEntity (http status code) -> 200 OK
     //exp: localhost:8080/api/policies?country=USA
- //   @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/policies", method = RequestMethod.GET)
     public ResponseEntity<Policies> getPoliciesByCountry(@RequestParam String country) {
         Policies policies = policiesService.getPoliciesByCountry(country);
@@ -62,7 +63,7 @@ public class PoliciesController {
     }
 
     //exp: localhost:8080/api/policies/getPoliciesByRegion?region=North America
- //   @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "api/policies/getPoliciesByRegion", method = RequestMethod.GET)
     public ResponseEntity<Policies> getPoliciesByRegion(@RequestParam String region) {
         Policies policiesRegion = policiesService.getPoliciesByRegion(region);
